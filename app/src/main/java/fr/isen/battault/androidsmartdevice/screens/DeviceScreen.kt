@@ -3,6 +3,7 @@ package fr.isen.battault.androidsmartdevice.screens
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -46,7 +47,7 @@ fun DeviceScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("AndroidSmartDevice") },
+                title = { Text("Android Smart Device") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Retour", tint = Color.White)
@@ -68,7 +69,6 @@ fun DeviceScreen(
         ) {
             if (!isConnected) {
                 Spacer(modifier = Modifier.height(32.dp))
-                Log.d("BLE", "huxyhvuxyhuywuheufwhuyhwuhvuxhu")
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE5E5)),
@@ -99,19 +99,16 @@ fun DeviceScreen(
                     Text("Se connecter", color = Color.White, fontSize = 16.sp)
                 }
             } else {
-                Log.d("BLE22", "huxyhvuxyhuywuheufwhuyhwuhvuxhu")
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("la lumiere", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = mainColor)
+                Text("Selectionne ta lumière ", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = mainColor)
                 Spacer(modifier = Modifier.height(24.dp))
-                Text("les leds", fontSize = 16.sp, fontWeight = FontWeight.Medium)
 
-                Spacer(modifier = Modifier.height(8.dp))
-                Divider(modifier = Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row (
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
                 ){
 
                     ledStates.forEachIndexed { index, isOn ->
@@ -147,7 +144,7 @@ fun DeviceScreen(
                         checked = isSubscribedButton3,
                         onCheckedChange = { onSubscribeToggleButton3(it) }
                     )
-                    Text("Activer les notifications bouton 1")
+                    Text("Appuies pour activer les notifications du bouton 1")
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -157,12 +154,12 @@ fun DeviceScreen(
                         checked = isSubscribedButton1,
                         onCheckedChange = { onSubscribeToggleButton1(it) }
                     )
-                    Text("Activer les notifications bouton 3")
+                    Text("Appuies pour activer les notifications du bouton 3")
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
-                Text("Compteur bouton 1 : $counterButton3", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text("Compteur bouton 3 : $counterButton1", fontSize = 16.sp)
+                Text("Compteur du bouton 1 : $counterButton3", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = mainColor)
+                Text("Compteur du bouton 3 : $counterButton1", fontSize = 18.sp, fontWeight = FontWeight.Bold,color = mainColor)
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = onResetCounter, colors = ButtonDefaults.buttonColors(containerColor = mainColor)) {
