@@ -1,6 +1,7 @@
 package fr.isen.battault.androidsmartdevice.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -36,6 +37,12 @@ fun DeviceScreen(
 ) {
     val mainColor = Color(0xFFFF9999)
 
+    val ledColors = listOf(
+        Color(0xFF1976D2), // LED 1 - Bleu
+        Color(0xFF4CAF50), // LED 2 - Vert
+        Color(0xFFF44336)  // LED 3 - Rouge
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -61,7 +68,7 @@ fun DeviceScreen(
         ) {
             if (!isConnected) {
                 Spacer(modifier = Modifier.height(32.dp))
-
+                Log.d("BLE", "huxyhvuxyhuywuheufwhuyhwuhvuxhu")
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE5E5)),
@@ -73,13 +80,13 @@ fun DeviceScreen(
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.Start
                     ) {
-                        Text("🔌 Périphérique détecté", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = mainColor)
+                        Text("Périphérique détecté", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = mainColor)
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Nom : $name", fontSize = 16.sp)
                         Text("Adresse : $address", fontSize = 14.sp, color = Color.Gray)
                         Text("RSSI : $rssi dBm", fontSize = 14.sp, color = Color.Gray)
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(" $connectionStatus", fontSize = 14.sp, color = Color(0xFFB71C1C))
+                        Text("$connectionStatus", fontSize = 14.sp, color = Color(0xFFB71C1C))
                     }
                 }
 
@@ -92,6 +99,7 @@ fun DeviceScreen(
                     Text("Se connecter", color = Color.White, fontSize = 16.sp)
                 }
             } else {
+                Log.d("BLE22", "huxyhvuxyhuywuheufwhuyhwuhvuxhu")
                 Spacer(modifier = Modifier.height(16.dp))
                 Text("la lumiere", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = mainColor)
                 Spacer(modifier = Modifier.height(24.dp))
@@ -101,10 +109,40 @@ fun DeviceScreen(
                 Divider(modifier = Modifier.padding(horizontal = 16.dp))
                 Spacer(modifier = Modifier.height(8.dp))
 
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+
+                    ledStates.forEachIndexed { index, isOn ->
+                        val color = ledColors.getOrNull(index) ?: Color.Gray
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Button(
+                                onClick = { onLedToggle(index) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (isOn) color else Color.LightGray
+                                ),
+                                modifier = Modifier
+                                    .height(64.dp)
+                                    .width(100.dp)
+                            ) {
+                                Text(
+                                    text = "LED ${index + 1}",
+                                    color = Color.White,
+                                    maxLines = 1
+                                )
+                            }
+                        }
+                    }
+                }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
-                ) {
+                )
+                {
+
+
                     Checkbox(
                         checked = isSubscribedButton3,
                         onCheckedChange = { onSubscribeToggleButton3(it) }

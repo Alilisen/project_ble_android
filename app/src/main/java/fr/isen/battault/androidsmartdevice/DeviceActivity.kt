@@ -73,7 +73,7 @@ class DeviceActivity : ComponentActivity() {
         gatt = device.connectGatt(this, false, object : BluetoothGattCallback() {
             override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
                 if (newState == BluetoothGatt.STATE_CONNECTED) {
-                    connectionState.value = "Connecté à $name"
+                    connectionState.value = "connecté à $name"
                     gatt.discoverServices()
                 } else if (newState == BluetoothGatt.STATE_DISCONNECTED) {
                     connectionState.value = "Déconnecté"
